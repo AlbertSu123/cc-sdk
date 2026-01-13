@@ -18,11 +18,8 @@ The official Claude Agent SDK requires the Anthropic API, meaning you pay per-to
 - Session persistence (save and resume)
 - System prompts and model selection
 - Built-in CLI tools (file operations, web search, etc.)
-
-## ⚠️ Not Yet Supported
-
-- Custom MCP servers (coming soon)
-- Custom subagents (coming soon)
+- Custom MCP servers
+- Custom subagents
 
 ## Installation
 
@@ -159,6 +156,39 @@ Or for one-shot:
 const result = await prompt("Hello", {
   model: "claude-sonnet-4-5-20250929",
   verbose: true,
+});
+```
+
+## MCP Servers
+
+Connect custom MCP servers to your session:
+
+```typescript
+const session = createSession({
+  mcpServers: {
+    "my-server": {
+      command: "npx",
+      args: ["-y", "tsx", "./path/to/server.ts"],
+      env: { API_KEY: "..." }
+    }
+  }
+});
+```
+
+By default, sessions do not inherit MCP servers from your user config—only explicitly configured servers are available.
+
+## Custom Subagents
+
+Define custom subagents that can be invoked during the session:
+
+```typescript
+const session = createSession({
+  agents: {
+    "reviewer": {
+      description: "Reviews code for best practices",
+      prompt: "You are a code reviewer. Analyze code for bugs and improvements."
+    }
+  }
 });
 ```
 
