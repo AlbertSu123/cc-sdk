@@ -2,18 +2,27 @@
 
 A TypeScript library that wraps the Claude CLI, exposing a clean SDK interface similar to the official Claude Agent SDK v2.
 
+## Why?
+
+The official Claude Agent SDK requires the Anthropic API, meaning you pay per-token at API rates. This library wraps the `claude` CLI instead, so you can **use your existing Claude Pro/Max subscription** for programmatic access—no separate API key or additional costs.
+
+- Use your Claude subscription for SDK-style development
+- No API key required, no per-token billing
+- Access to all CLI features: tools, MCP servers, web search, etc.
+- Works with whatever model your subscription supports
+
+## Supported
+
+- One-shot prompts and multi-turn sessions
+- Streaming responses with thinking blocks
+- Session persistence (save and resume)
+- System prompts and model selection
+- Built-in CLI tools (file operations, web search, etc.)
+
 ## ⚠️ Not Yet Supported
 
 - Custom MCP servers (coming soon)
 - Custom subagents (coming soon)
-
-## Why?
-
-The official Claude Agent SDK requires the Anthropic API. This library wraps the `claude` CLI instead, which means:
-
-- Uses your existing Claude Code authentication (no separate API key needed)
-- Access to all CLI features: tools, MCP servers, web search, etc.
-- Works with whatever model your Claude Code subscription supports
 
 ## Installation
 
