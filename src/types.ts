@@ -136,6 +136,19 @@ export type SDKEvent =
 
 export const DEFAULT_MODEL = "claude-opus-4-5-20251101";
 
+// MCP server configuration
+export interface MCPServerConfig {
+  command: string;
+  args?: string[];
+  env?: Record<string, string>;
+}
+
+// Custom agent configuration
+export interface AgentConfig {
+  description: string;
+  prompt: string;
+}
+
 // Options for creating sessions
 export interface SessionOptions {
   model?: string;
@@ -143,6 +156,8 @@ export interface SessionOptions {
   appendSystemPrompt?: string;
   cwd?: string;
   verbose?: boolean;
+  mcpServers?: Record<string, MCPServerConfig>;
+  agents?: Record<string, AgentConfig>;
 }
 
 // Stream options

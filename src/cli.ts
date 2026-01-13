@@ -1,6 +1,6 @@
 import { DEFAULT_MODEL, type SessionOptions, type SDKEvent } from "./types.ts";
-import { existsSync } from "fs";
-import { homedir } from "os";
+import { existsSync, writeFileSync } from "fs";
+import { homedir, tmpdir } from "os";
 import { join } from "path";
 import { spawn, type ChildProcess } from "child_process";
 
@@ -26,6 +26,12 @@ function findClaudeExecutable(): string {
 
   // Fall back to just "claude" and hope it's in PATH
   return "claude";
+}
+
+function writeTempMcpConfig(config: object): string {
+  const path = join(tmpdir(), `cc-sdk-mcp-${Date.now()}.json`);
+  writeFileSync(path, JSON.stringify(config));
+  return path;
 }
 
 export interface CLIProcess {
@@ -54,6 +60,18 @@ export function buildArgs(options: SpawnOptions): string[] {
 
   if (options.appendSystemPrompt) {
     args.push("--append-system-prompt", options.appendSystemPrompt);
+  }
+
+  // MCP servers - write config to temp file, use strict mode to not inherit user defaults
+  if (options.mcpServers && Object.keys(options.mcpServers).length > 0) {
+    const mcpConfig = { mcpServers: options.mcpServers };
+    const configPath = writeTempMcpConfig(mcpConfig);
+    args.push("--mcp-config", configPath, "--strict-mcp-config");
+  }
+
+  // Custom agents - pass as JSON string
+  if (options.agents && Object.keys(options.agents).length > 0) {
+    args.push("--agents", JSON.stringify(options.agents));
   }
 
   // Add the prompt as the final argument

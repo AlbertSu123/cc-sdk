@@ -1,4 +1,4 @@
-import { createSession } from "./src/index.ts";
+import { createSession } from "../src/index.ts";
 
 async function testLongExecution() {
   console.log("=== Testing longer execution (create dir, write python, run it) ===\n");
@@ -22,9 +22,9 @@ Do the following steps:
     if (event.type === "assistant") {
       for (const block of event.message.content) {
         if (block.type === "text") {
-          console.log("\n📝 TEXT:", block.text);
+          console.log("\nTEXT:", block.text);
         } else if (block.type === "tool_use") {
-          console.log("\n🔧 TOOL:", block.name);
+          console.log("\nTOOL:", block.name);
           if (block.name === "Bash") {
             console.log("   Command:", (block.input as any).command);
           } else if (block.name === "Write") {
@@ -33,7 +33,7 @@ Do the following steps:
         }
       }
     } else if (event.type === "result") {
-      console.log("\n✅ RESULT:", event.subtype);
+      console.log("\nRESULT:", event.subtype);
       if (event.subtype === "success") {
         console.log("   Final answer:", event.result);
         console.log("   Cost: $" + event.total_cost_usd.toFixed(4));

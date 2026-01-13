@@ -25,4 +25,7 @@ export type {
   SessionOptions,
   StreamOptions,
   PromptResult,
+  // MCP and Agents
+  MCPServerConfig,
+  AgentConfig,
 } from "./types.ts";
