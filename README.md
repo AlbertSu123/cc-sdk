@@ -13,9 +13,10 @@ The official Claude Agent SDK requires the Anthropic API. This library wraps the
 ## Installation
 
 ```bash
-bun add cc-sdk
+# From GitHub
+npm install bryanhpchiang/cc-sdk
 # or
-npm install cc-sdk
+bun add bryanhpchiang/cc-sdk
 ```
 
 Requires the Claude CLI to be installed. See [Claude Code setup](https://docs.anthropic.com/en/docs/claude-code).
