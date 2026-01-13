@@ -84,6 +84,22 @@ for await (const event of session.stream()) {
 }
 ```
 
+### Get session ID
+
+After streaming, you can get the session ID to resume later:
+
+```typescript
+const session = createSession();
+await session.send("Hello");
+for await (const event of session.stream()) {
+  // ...
+}
+
+const sessionId = session.getSessionId();
+console.log("Session ID:", sessionId);
+// Save this to resume later
+```
+
 ### Resume a session
 
 ```typescript
