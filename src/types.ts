@@ -104,7 +104,10 @@ export interface ResultErrorEvent {
     | "error_max_turns"
     | "error_during_execution"
     | "error_max_budget_usd"
-    | "error_max_structured_output_retries";
+    | "error_max_structured_output_retries"
+    | "error_rate_limit"
+    | "error_usage_limit"
+    | "error_overloaded";
   uuid: string;
   session_id: string;
   is_error: true;
@@ -164,6 +167,43 @@ export interface SessionOptions {
 // Stream options
 export interface StreamOptions {
   filter?: boolean;
+}
+
+// Retry configuration
+export interface RetryOptions {
+  maxRetries?: number;
+  initialDelayMs?: number;
+  maxDelayMs?: number;
+  backoffMultiplier?: number;
+  retryableErrors?: string[];
+}
+
+export const DEFAULT_RETRY_OPTIONS: Required<RetryOptions> = {
+  maxRetries: 3,
+  initialDelayMs: 1000,
+  maxDelayMs: 60000,
+  backoffMultiplier: 2,
+  retryableErrors: [
+    "rate_limit",
+    "rate limit",
+    "429",
+    "overloaded",
+    "capacity",
+    "too many requests",
+    "quota exceeded",
+    "usage limit",
+    "credit",
+  ],
+};
+
+// Error classification
+export type RetryableErrorType = "rate_limit" | "overloaded" | "usage_limit" | "unknown";
+
+export interface ClassifiedError {
+  isRetryable: boolean;
+  errorType: RetryableErrorType;
+  retryAfterMs?: number;
+  originalError: string;
 }
 
 // Result from one-shot prompt
