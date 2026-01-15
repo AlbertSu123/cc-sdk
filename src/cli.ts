@@ -45,6 +45,7 @@ export function buildArgs(options: SpawnOptions): string[] {
     "-p",
     "--output-format",
     "stream-json",
+    "--verbose",
     "--dangerously-skip-permissions",
   ];
 

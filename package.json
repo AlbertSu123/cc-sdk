@@ -6,10 +6,25 @@
   "exports": {
     ".": "./src/index.ts"
   },
+  "scripts": {
+    "dev": "npx tsx --watch server/index.ts",
+    "start": "npx tsx server/index.ts",
+    "pm2:start": "pm2 start ecosystem.config.cjs --env production",
+    "pm2:stop": "pm2 stop cc-sdk-api",
+    "pm2:restart": "pm2 restart cc-sdk-api",
+    "pm2:logs": "pm2 logs cc-sdk-api"
+  },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/node": "^20.19.29",
+    "tsx": "^4.21.0"
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.19.9",
+    "dotenv": "^17.2.3",
+    "hono": "^4.11.4"
   }
 }
